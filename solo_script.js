@@ -19,7 +19,7 @@ position = document.getElementById('content');
 //Loop the array, extracting each array and writing information to the DOM
 //Note that the information is not 'clean'
 for (var i = 0; i < array.length; i++) {
-  array[i] = calculateSTI(array);
+  array[i] = calculateSTI(array[i]);
   newEl = document.createElement('li');
   newText = document.createTextNode(array[i]);
   newEl.appendChild(newText);
@@ -30,19 +30,19 @@ function calculateSTI(array) {
   var newArray = [];
 
   //Made Adjustment to below statement to point to unique sub-index of array.
-  newArray[0] = array[i][0];
+  newArray[0] = array[0];
 
-  var employeeNumber = array[i][1];
-  var baseSalary = (array[i][2]);
-  var reviewScore = array[i][3];
+  var employeeNumber = array[1];
+  var baseSalary = array[2];
+  var reviewScore = array[3];
 
   var bonus = getBaseSTI(reviewScore) + getYearAdjustment(employeeNumber) - getIncomeAdjustment(baseSalary);
   if (bonus > 0.13) {
     bonus = 0.13;
   }
 
-//Rounded NewArray[2] output
-  newArray[1] = Number(bonus);
+  //Rounded NewArray[2] output
+  newArray[1] = bonus;
   newArray[2] = Math.round(baseSalary * (1.0 + bonus));
   newArray[3] = baseSalary * bonus;
   console.log(newArray[0] + ' ' + newArray[1] + ' ' + newArray[2] + ' ' + newArray[3]);
@@ -68,7 +68,8 @@ function getBaseSTI(reviewScore) {
       basePercent = 0.10;
       break;
   }
-	// Removed - 1 to ensure output is positive.
+
+  // Removed - 1 to ensure output is positive.
   return basePercent;
 }
 
